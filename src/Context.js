@@ -10,7 +10,7 @@ function ProductProvider(props) {
   useEffect(() => setTempProducts(), []);
 
   const handleDetail = () => console.log("Hello from detail");
-  const addToCart = () => console.log("Hello from add to cart");
+  const addToCart = (id) => console.log(`Hello from add to cart id id ${id}`);
 
   const setTempProducts = () => {
     let tempProducts = [];

@@ -48,6 +48,19 @@ export default function Details() {
                   Some Info about the product:
                 </p>
                 <p className="text-muted lead"> {info}</p>
+                {/* buttons */}
+                <Link to="/">
+                  <ButtonContainer> back to products</ButtonContainer>
+                </Link>
+                <ButtonContainer
+                  cart
+                  disabled={inCart ? true : false}
+                  onClick={() => {
+                    value.addToCart(id);
+                  }}
+                >
+                  {inCart ? "In cart" : "Add to cart"}
+                </ButtonContainer>
               </div>
             </div>
           </div>
