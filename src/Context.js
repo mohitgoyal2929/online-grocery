@@ -1,19 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { storeProducts, detailProduct } from "./data";
 
 const ProductContext = React.createContext();
 
-const handleDetail = () => console.log("Hello from detail");
-const addToCart = () => console.log("Hello from add to cart");
-
 function ProductProvider(props) {
-  const [products, setProducts] = useState(storeProducts);
-  const [inputDetailProducts, setInputDetailProducts] = useState(detailProduct);
+  const [dbProducts, setDbProducts] = useState([]);
+  const [detailProducts, setDetailProducts] = useState(detailProduct);
+
+  useEffect(() => setTempProducts(), []);
+
+  const handleDetail = () => console.log("Hello from detail");
+  const addToCart = () => console.log("Hello from add to cart");
+
+  const setTempProducts = () => {
+    let tempProducts = [];
+    storeProducts.forEach((item) => {
+      const singleItem = { ...item };
+      tempProducts = [...tempProducts, singleItem];
+    });
+    setDbProducts(tempProducts);
+  };
+
   return (
     <ProductContext.Provider
       value={{
-        products: [...products],
-        detailProduct: inputDetailProducts,
+        products: [...dbProducts],
+        detailProduct: detailProducts,
         handleDetail: handleDetail,
         addToCart: addToCart,
       }}
