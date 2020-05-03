@@ -32,7 +32,7 @@ export default function Navbar() {
     </NavWrapper>
   );
 }
-
+ 
 const NavWrapper = styled.nav`
   background: var(--mainBlue) !important;
   .nav-link {
