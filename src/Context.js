@@ -6,8 +6,16 @@ const ProductContext = React.createContext();
 function ProductProvider(props) {
   const [dbProducts, setDbProducts] = useState([]);
   const [detailProducts, setDetailProducts] = useState(detailProduct);
+  const [cart, setCart] = useState([]);
 
-  useEffect(() => setTempProducts(), []);
+  useEffect(() => {
+    let tempProducts = [];
+    storeProducts.forEach((item) => {
+      const singleItem = { ...item };
+      tempProducts = [...tempProducts, singleItem];
+    });
+    setDbProducts(tempProducts);
+  }, []);
 
   const getItem = (id) => dbProducts.find((item) => item.id === id);
 
@@ -16,15 +24,16 @@ function ProductProvider(props) {
     setDetailProducts(product);
   };
 
-  const addToCart = (id) => console.log(`Hello from add to cart id id ${id}`);
-
-  const setTempProducts = () => {
-    let tempProducts = [];
-    storeProducts.forEach((item) => {
-      const singleItem = { ...item };
-      tempProducts = [...tempProducts, singleItem];
-    });
+  const addToCart = (id) => {
+    let tempProducts = [...dbProducts];
+    let index = tempProducts.indexOf(getItem(id));
+    const product = tempProducts[index];
+    const price = product.price;
+    product.inCart = true;
+    product.count = 1;
+    product.total = price;
     setDbProducts(tempProducts);
+    setCart([...cart, product]);
   };
 
   return (

@@ -23,7 +23,7 @@ export default function Product(props) {
               <button
                 className="card-btn"
                 disabled={inCart ? true : false}
-                onClick={(id) => {
+                onClick={() => {
                   value.addToCart(id);
                 }}
               >
