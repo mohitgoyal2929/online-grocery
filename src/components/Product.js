@@ -9,29 +9,36 @@ export default function Product(props) {
   return (
     <ProductWrapper className="col-9 mx-auto cold-md-6 col-lg-3 my-3">
       <div className="card">
-        <div
-          className="img-container p-5"
-          onClick={() => console.log("you clicked img container")}
-        >
-          <Link to="/details">
-            <img src={img} alt="Product" className="card-img-top" />
-          </Link>
-          <button
-            className="card-btn"
-            disabled={inCart ? true : false}
-            onClick={() => {
-              console.log("added to cart");
-            }}
-          >
-            {inCart ? (
-              <p className="text-capitalize mb-0" disabled>
-                in cart
-              </p>
-            ) : (
-              <i className="fa fa-cart-plus" />
-            )}
-          </button>
-        </div>
+        <ProductConsumer>
+          {(value) => (
+            <div
+              className="img-container p-5"
+              onClick={() => {
+                value.handleDetail(id);
+              }}
+            >
+              <Link to="/details">
+                <img src={img} alt="Product" className="card-img-top" />
+              </Link>
+              <button
+                className="card-btn"
+                disabled={inCart ? true : false}
+                onClick={(id) => {
+                  value.addToCart(id);
+                }}
+              >
+                {inCart ? (
+                  <p className="text-capitalize mb-0" disabled>
+                    in cart
+                  </p>
+                ) : (
+                  <i className="fa fa-cart-plus" />
+                )}
+              </button>
+            </div>
+          )}
+        </ProductConsumer>
+
         {/* Card Footer */}
         <div className="card-footer d-flex justify-content-between">
           <p className="align-self-center mb-0">{title}</p>

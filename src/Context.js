@@ -9,7 +9,13 @@ function ProductProvider(props) {
 
   useEffect(() => setTempProducts(), []);
 
-  const handleDetail = () => console.log("Hello from detail");
+  const getItem = (id) => dbProducts.find((item) => item.id === id);
+
+  const handleDetail = (id) => {
+    const product = getItem(id);
+    setDetailProducts(product);
+  };
+
   const addToCart = (id) => console.log(`Hello from add to cart id id ${id}`);
 
   const setTempProducts = () => {
