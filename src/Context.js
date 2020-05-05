@@ -7,6 +7,11 @@ function ProductProvider(props) {
   const [dbProducts, setDbProducts] = useState([]);
   const [detailProducts, setDetailProducts] = useState(detailProduct);
   const [cart, setCart] = useState([]);
+  const [modalOpen, setModalOpen] = useState(true);
+  const [modalProduct, setModalProduct] = useState(detailProduct);
+  const [cartSubtotal, setCartSubtotal] = useState(0);
+  const [cartTax, setCartTax] = useState(0);
+  const [cartTotal, setCartTotal] = useState(0);
 
   useEffect(() => {
     let tempProducts = [];
@@ -35,14 +40,27 @@ function ProductProvider(props) {
     setDbProducts(tempProducts);
     setCart([...cart, product]);
   };
+  const openModal = (id) => {
+    const product = getItem(id);
+    setModalProduct(product);
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <ProductContext.Provider
       value={{
         products: [...dbProducts],
         detailProduct: detailProducts,
+        cart: cart,
+        modalOpen: modalOpen,
+        modalProduct: modalProduct,
         handleDetail: handleDetail,
         addToCart: addToCart,
+        openModal: openModal,
+        closeModal: closeModal,
       }}
     >
       {props.children}

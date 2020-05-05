@@ -10,7 +10,7 @@ export default function ProductList() {
         <div className="container">
           <Title name="our" title="products" />
           {/* Products Row */}
-          <div className="row">   
+          <div className="row">
             <ProductConsumer>
               {(value) => {
                 return value.products.map((product) => {

@@ -57,6 +57,7 @@ export default function Details() {
                   disabled={inCart ? true : false}
                   onClick={() => {
                     value.addToCart(id);
+                    value.openModal(id);
                   }}
                 >
                   {inCart ? "In cart" : "Add to cart"}
