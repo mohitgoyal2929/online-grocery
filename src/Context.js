@@ -48,6 +48,18 @@ function ProductProvider(props) {
   const closeModal = () => {
     setModalOpen(false);
   };
+  const increment = (id) => {
+    console.log("this is incremnt methiod");
+  };
+  const decrement = (id) => {
+    console.log("this is decrement methiod");
+  };
+  const removeItem = (id) => {
+    console.log("this is remove");
+  };
+  const clearCart = () => {
+    console.log("clear cart methiod");
+  };
 
   return (
     <ProductContext.Provider
@@ -55,12 +67,19 @@ function ProductProvider(props) {
         products: [...dbProducts],
         detailProduct: detailProducts,
         cart: cart,
+        cartSubtotal: cartSubtotal,
+        cartTax: cartTax,
+        cartTotal: cartTotal,
         modalOpen: modalOpen,
         modalProduct: modalProduct,
         handleDetail: handleDetail,
         addToCart: addToCart,
         openModal: openModal,
         closeModal: closeModal,
+        inCremnet: increment,
+        decrement: decrement,
+        removeItem: removeItem,
+        clearCart: clearCart,
       }}
     >
       {props.children}
