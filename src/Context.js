@@ -5,7 +5,7 @@ const ProductContext = React.createContext();
 
 function ProductProvider(props) {
   const [dbProducts, setDbProducts] = useState([]);
-  const [detailProducts, setDetailProducts] = useState(detailProduct);
+  const [detailProducts, setDetailProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [modalOpen, setModalOpen] = useState(true);
   const [modalProduct, setModalProduct] = useState(detailProduct);
@@ -39,6 +39,7 @@ function ProductProvider(props) {
     product.total = price;
     setDbProducts(tempProducts);
     setCart([...cart, product]);
+    addTotals();
   };
   const openModal = (id) => {
     const product = getItem(id);
@@ -61,13 +62,24 @@ function ProductProvider(props) {
     console.log("clear cart methiod");
   };
 
+  const addTotals = () => {
+    let subtotal = 0;
+    cart.map((item) => (subtotal += item.total));
+    const tempTax = subtotal * 0.1;
+    const tax = parseFloat(tempTax.toFixed(2));
+    const total = subtotal + tax;
+    setCartSubtotal(subtotal);
+    setCartTax(tax);
+    setCartTotal(total);
+  };
+
   return (
     <ProductContext.Provider
       value={{
         products: [...dbProducts],
         detailProduct: detailProducts,
         cart: cart,
-        cartSubtotal: cartSubtotal,
+        cartSubTotal: cartSubtotal,
         cartTax: cartTax,
         cartTotal: cartTotal,
         modalOpen: modalOpen,
