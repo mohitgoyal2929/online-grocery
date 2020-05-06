@@ -7,12 +7,13 @@ function ProductProvider(props) {
   const [dbProducts, setDbProducts] = useState([]);
   const [detailProducts, setDetailProducts] = useState([]);
   const [cart, setCart] = useState([]);
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
   const [modalProduct, setModalProduct] = useState(detailProduct);
   const [cartSubtotal, setCartSubtotal] = useState(0);
   const [cartTax, setCartTax] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
 
+  //adding a new refrence for storing products
   useEffect(() => {
     let tempProducts = [];
     storeProducts.forEach((item) => {
@@ -21,6 +22,18 @@ function ProductProvider(props) {
     });
     setDbProducts(tempProducts);
   }, []);
+
+  //Setting the prices of the products being added to cart
+  useEffect(() => {
+    let subtotal = 0;
+    cart.map((item) => (subtotal += item.total));
+    const tempTax = subtotal * 0.1;
+    const tax = parseFloat(tempTax.toFixed(2));
+    const total = subtotal + tax;
+    setCartSubtotal(subtotal);
+    setCartTax(tax);
+    setCartTotal(total);
+  }, [cart]);
 
   const getItem = (id) => dbProducts.find((item) => item.id === id);
 
@@ -39,8 +52,8 @@ function ProductProvider(props) {
     product.total = price;
     setDbProducts(tempProducts);
     setCart([...cart, product]);
-    addTotals();
   };
+
   const openModal = (id) => {
     const product = getItem(id);
     setModalProduct(product);
@@ -60,17 +73,6 @@ function ProductProvider(props) {
   };
   const clearCart = () => {
     console.log("clear cart methiod");
-  };
-
-  const addTotals = () => {
-    let subtotal = 0;
-    cart.map((item) => (subtotal += item.total));
-    const tempTax = subtotal * 0.1;
-    const tax = parseFloat(tempTax.toFixed(2));
-    const total = subtotal + tax;
-    setCartSubtotal(subtotal);
-    setCartTax(tax);
-    setCartTotal(total);
   };
 
   return (

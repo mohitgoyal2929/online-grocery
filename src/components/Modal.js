@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { ProductConsumer } from "../Context";
 import { ButtonContainer } from "./Button";

@@ -15,7 +15,7 @@ export default function Cart() {
           if (cart.length > 0)
             return (
               <React.Fragment>
-                <Title name="your" Title="cart" />
+                <Title name="your" title="cart" />
                 <CartColumns />
                 <CartList value={value} />
                 <CartTotals value={value} />
