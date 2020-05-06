@@ -58,7 +58,13 @@ function ProductProvider(props) {
     setCart([...cart, product]);
   };
   const increment = (id) => {
-    console.log("this is incremnt methiod");
+    let tempCart = [...cart];
+    const selectedProduct = tempCart.find((item) => item.id === id);
+    const index = tempCart.indexOf(selectedProduct);
+    const product = tempCart[index];
+    product.count++;
+    product.total += product.price;
+    setCart([...tempCart]);
   };
   const decrement = (id) => {
     console.log("this is decrement methiod");
@@ -105,8 +111,8 @@ function ProductProvider(props) {
         addToCart: addToCart,
         openModal: openModal,
         closeModal: closeModal,
-        inCremnet: increment,
-        decrement: decrement,
+        increment,
+        decrement,
         removeItem: removeItem,
         clearCart: clearCart,
       }}
