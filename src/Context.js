@@ -13,15 +13,10 @@ function ProductProvider(props) {
   const [cartTax, setCartTax] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
 
-  //adding a new refrence for storing products
+  //adding products to a new refrence
   useEffect(() => {
-    let tempProducts = [];
-    storeProducts.forEach((item) => {
-      const singleItem = { ...item };
-      tempProducts = [...tempProducts, singleItem];
-    });
-    setDbProducts(tempProducts);
-  }, [cart]);
+    setProducts();
+  }, []);
 
   //Setting the prices of the products being added to cart
   useEffect(() => {
@@ -34,6 +29,15 @@ function ProductProvider(props) {
     setCartTax(tax);
     setCartTotal(total);
   }, [cart]);
+
+  const setProducts = () => {
+    let tempProducts = [];
+    storeProducts.forEach((item) => {
+      const singleItem = { ...item };
+      tempProducts = [...tempProducts, singleItem];
+    });
+    setDbProducts(tempProducts);
+  };
 
   const getItem = (id) => dbProducts.find((item) => item.id === id);
 
@@ -60,14 +64,23 @@ function ProductProvider(props) {
     console.log("this is decrement methiod");
   };
   const removeItem = (id) => {
-    console.log("this is remove");
+    let tempProducts = [...dbProducts];
+    let tempCart = [...cart];
+    tempCart = tempCart.filter((item) => item.id !== id);
+    const index = tempProducts.indexOf(getItem(id));
+    let removedProduct = tempProducts[index];
+    removedProduct.inCart = false;
+    removedProduct.count = 0;
+    removedProduct.total = 0;
+    setCart([...tempCart]);
+    setProducts([...tempProducts]);
   };
   const clearCart = () => {
     setCart([]);
+    setProducts();
   };
 
   //Modal Functionality
-
   const openModal = (id) => {
     const product = getItem(id);
     setModalProduct(product);
