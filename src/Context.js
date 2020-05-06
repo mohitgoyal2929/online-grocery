@@ -21,7 +21,7 @@ function ProductProvider(props) {
       tempProducts = [...tempProducts, singleItem];
     });
     setDbProducts(tempProducts);
-  }, []);
+  }, [cart]);
 
   //Setting the prices of the products being added to cart
   useEffect(() => {
@@ -53,15 +53,6 @@ function ProductProvider(props) {
     setDbProducts(tempProducts);
     setCart([...cart, product]);
   };
-
-  const openModal = (id) => {
-    const product = getItem(id);
-    setModalProduct(product);
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
   const increment = (id) => {
     console.log("this is incremnt methiod");
   };
@@ -72,7 +63,18 @@ function ProductProvider(props) {
     console.log("this is remove");
   };
   const clearCart = () => {
-    console.log("clear cart methiod");
+    setCart([]);
+  };
+
+  //Modal Functionality
+
+  const openModal = (id) => {
+    const product = getItem(id);
+    setModalProduct(product);
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   return (
