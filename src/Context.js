@@ -67,7 +67,16 @@ function ProductProvider(props) {
     setCart([...tempCart]);
   };
   const decrement = (id) => {
-    console.log("this is decrement methiod");
+    let tempCart = [...cart];
+    const selectedProduct = tempCart.find((item) => item.id === id);
+    const index = tempCart.indexOf(selectedProduct);
+    const product = tempCart[index];
+    product.count--;
+    if (product.count === 0) removeItem(id);
+    else {
+      product.total = product.count * product.price;
+    }
+    setCart([...tempCart]);
   };
   const removeItem = (id) => {
     let tempProducts = [...dbProducts];
